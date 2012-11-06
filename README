@@ -1,0 +1,23 @@
+Jquery CookieGuard offers a solution to comply with European Union cookie laws.
+Those state a user must be informed of all non-technical cookies before
+placement, and must have the possibility to opt-out.
+
+I found the current popular solutions either too big and feature-packed or
+lacking flexibility. I needed something simple but reusable, so I decided to
+write my own script.
+
+## Requirements:
+
+jQuery (1.6+), http://www.jquery.com
+jQuery cookie, https://github.com/carhartl/jquery-cookie
+The default html toolbar also uses Twitter Bootstrap.
+
+## Usage:
+
+Put the script in the head tag (together with jquery cookie) and init with
+$.CookieGuard();
+See the source for commented options.
+
+## Changelog:
+
+0.1 initial release.

@@ -1,0 +1,34 @@
+#cg {
+    width: 100%;
+    padding: 10px 0;
+    background-color: #666666;
+    color: #FFF;
+}
+
+#cg a {
+    color: #FFF;
+}
+
+#cg-message {
+    padding: 4px 0;
+}
+
+#cg-message a {
+    text-decoration: underline;
+}
+
+.cg-fixed-top {
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.cg-fixed-bottom {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+.cg-inactive #cg-show {
+    display: inline;
+}
