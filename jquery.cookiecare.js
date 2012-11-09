@@ -19,9 +19,9 @@
  * along with this program. If not, see <http://gnu.org/licenses/>.
  */
 (function ($) {
-    $.cookieGuard = function (options) {
+    $.cookieCare = function (options) {
 
-        var COOKIE_PREFIX = 'cg-',
+        var COOKIE_PREFIX = 'cc-',
             COOKIE_APPROVED_VALUE = 'approved',
             COOKIE_DENIED_VALUE = 'denied';
 
@@ -71,7 +71,7 @@
         }
 
         function execute (type) {
-            jQuery("script.cg-" + type + '[type="text/plain"]').each(function () {
+            jQuery("script.cc-" + type + '[type="text/plain"]').each(function () {
                 if (jQuery(this).attr("src")) {
                     jQuery(this).after('<script type="text/javascript" src="' + jQuery(this).attr("src") + '"><\/script>');
                 } else {
@@ -90,16 +90,16 @@
 
         function draw () {
             var position = options.position == 'top' ? 'top' : 'bottom';
-            jQuery('body').append('<div id="cg" class="cg-fixed-' + position + '" style="display: none;"><div class="container"><div class="row"><div id="cg-message" class="span7">' + options.message + '</div><div class="span5"><div id="cg-buttons" class="pull-right"></div></div></div></div></div>');
-            jQuery('#cg-buttons').append('<a id="cg-button-accept" class="btn btn-success" href="#" title="' + options.hideMessageButtonText + '">' + options.hideMessageButtonText + '</a>');
+            jQuery('body').append('<div id="cc" class="cc-fixed-' + position + '" style="display: none;"><div class="container"><div class="row"><div id="cc-message" class="span7">' + options.message + '</div><div class="span5"><div id="cc-buttons" class="pull-right"></div></div></div></div></div>');
+            jQuery('#cc-buttons').append('<a id="cc-button-accept" class="btn btn-success" href="#" title="' + options.hideMessageButtonText + '">' + options.hideMessageButtonText + '</a>');
             if(options.enableOptOut)
-                jQuery('#cg-buttons').append(' <a id="cg-button-deny" class="btn btn-link" href="#" title="' + options.denyCookiesButtonText + '">' + options.denyCookiesButtonText + '</a>');
+                jQuery('#cc-buttons').append(' <a id="cc-button-deny" class="btn btn-link" href="#" title="' + options.denyCookiesButtonText + '">' + options.denyCookiesButtonText + '</a>');
 
-            jQuery('#cg-button-accept').on( 'click', function (e) {
+            jQuery('#cc-button-accept').on( 'click', function (e) {
                 approveAllTypes();
                 hideToolbar();
             });
-            jQuery('#cg-button-deny').on( 'click', function (e) {
+            jQuery('#cc-button-deny').on( 'click', function (e) {
                 denyAllTypes();
                 hideToolbar();
             });
@@ -108,11 +108,11 @@
 
         function showToolbar () {
             updateImpressions();
-            jQuery('#cg').show('fast');
+            jQuery('#cc').show('fast');
         }
 
         function hideToolbar () {
-            jQuery('#cg').hide('fast');
+            jQuery('#cc').hide('fast');
         }
 
         function getImpressions () {
