@@ -1,6 +1,6 @@
 #cc {
     width: 100%;
-    padding: 5px 0;
+    padding: 3px 0;
     background-color: #454545;
     color: #FFF;
     opacity: 0.9;
@@ -8,6 +8,10 @@
 
 #cc a {
     color: #FFF;
+}
+
+#cc-button-accept {
+    font-size: 12px;
 }
 
 #cc-message {
