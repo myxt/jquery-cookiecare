@@ -1,8 +1,9 @@
 #cc {
     width: 100%;
-    padding: 10px 0;
-    background-color: #666666;
+    padding: 5px 0;
+    background-color: #454545;
     color: #FFF;
+    opacity: 0.9;
 }
 
 #cc a {
@@ -10,7 +11,7 @@
 }
 
 #cc-message {
-    padding: 4px 0;
+    padding: 3px 0;
 }
 
 #cc-message a {

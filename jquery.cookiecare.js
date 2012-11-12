@@ -91,9 +91,9 @@
         function draw () {
             var position = options.position == 'top' ? 'top' : 'bottom';
             jQuery('body').append('<div id="cc" class="cc-fixed-' + position + '" style="display: none;"><div class="container"><div class="row"><div id="cc-message" class="span7">' + options.message + '</div><div class="span5"><div id="cc-buttons" class="pull-right"></div></div></div></div></div>');
-            jQuery('#cc-buttons').append('<a id="cc-button-accept" class="btn btn-success" href="#" title="' + options.hideMessageButtonText + '">' + options.hideMessageButtonText + '</a>');
+            jQuery('#cc-buttons').append('<a id="cc-button-accept" class="btn btn-small btn-success" href="#" title="' + options.hideMessageButtonText + '">' + options.hideMessageButtonText + '</a>');
             if(options.enableOptOut)
-                jQuery('#cc-buttons').append(' <a id="cc-button-deny" class="btn btn-link" href="#" title="' + options.denyCookiesButtonText + '">' + options.denyCookiesButtonText + '</a>');
+                jQuery('#cc-buttons').append(' <a id="cc-button-deny" class="btn btn-small btn-link" href="#" title="' + options.denyCookiesButtonText + '">' + options.denyCookiesButtonText + '</a>');
 
             jQuery('#cc-button-accept').on( 'click', function (e) {
                 approveAllTypes();
