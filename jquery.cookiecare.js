@@ -33,7 +33,9 @@
                 hideMessageButtonText: 'Hide message', // Close button text.
                 enableOptOut: true, // Show a link to disable cookies?
                 settingsLink: '/cookies',
-                settingsButtonText: 'Settings' // Disable cookies link text.
+                settingsButtonText: 'Settings', // Disable cookies link text.
+                settingsChooseText: 'Choose your preference.',
+                settingsSavedText: 'Settings saved.'
             },
             options = jQuery.extend(defaults, options),
             cookies = {
@@ -112,13 +114,19 @@
         }
 
         function storeSettings () {
-            var approvedTypes = jQuery('#cc-settings-form input[name="types"]:checked').val().split(',');
+            var choice = jQuery('#cc-settings-form input[name="types"]:checked').val();
+            if(typeof choice == 'undefined') {
+                jQuery('.cookiesettings').prepend('<div class="alert alert-danger fade in"><a class="close" data-dismiss="alert" href="#">&times;</a>' + options.settingsChooseText + '</div>');
+                return;
+            }
+            var approvedTypes = choice.split(',');
             jQuery.each(cookies, function (type) {
-                if( jQuery.inArray( type, approvedTypes ) !== -1 )
+                if( jQuery.inArray( type, approvedTypes ) != -1 )
                     approveCookieType(type);
                 else
                     denyCookieType(type);
             });
+            jQuery('.cookiesettings').prepend('<div class="alert fade in"><a class="close" data-dismiss="alert" href="#">&times;</a>' + options.settingsSavedText + '</div>');
         }
 
         function resetSettings () {
@@ -126,6 +134,7 @@
             jQuery.each(cookies, function (type) {
                 setCookie(type, null);
             });
+            jQuery('.cookiesettings').prepend('<div class="alert fade in"><a class="close" data-dismiss="alert" href="#">&times;</a>' + options.settingsSavedText + '</div>');
         }
 
         function showToolbar () {
