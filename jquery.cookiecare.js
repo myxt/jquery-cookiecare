@@ -83,13 +83,6 @@
             cookies[type].executed = true;
         }
 
-        function reset () {
-            setCookie('impressions', null);
-            jQuery.each(cookies, function (type) {
-                setCookie(type, null);
-            });
-        }
-
         function draw () {
             var position = options.position == 'top' ? 'top' : 'bottom';
             jQuery('body').append('<div id="cc" class="cc-fixed-' + position + '" style="display: none;"><div class="container"><div class="row"><div id="cc-message" class="span7">' + options.message + '</div><div class="span5"><div id="cc-buttons" class="pull-right"></div></div></div></div></div>');
@@ -97,6 +90,11 @@
             if(options.enableOptOut)
                 jQuery('#cc-buttons').append(' <a id="cc-button-deny" class="btn btn-small btn-link" href="' + options.settingsLink + '" title="' + options.settingsButtonText + '">' + options.settingsButtonText + '</a>');
 
+            bind();
+
+        }
+
+        function bind () {
             jQuery('#cc-button-accept').on( 'click', function (e) {
                 approveAllTypes();
                 hideToolbar();
@@ -107,6 +105,10 @@
                 hideToolbar();
             });
 
+            jQuery('#cc-button-reset-inline').on( 'click', function (e) {
+                e.preventDefault();
+                resetSettings();
+            });
         }
 
         function storeSettings () {
@@ -116,6 +118,13 @@
                     approveCookieType(type);
                 else
                     denyCookieType(type);
+            });
+        }
+
+        function resetSettings () {
+            setCookie('impressions', null);
+            jQuery.each(cookies, function (type) {
+                setCookie(type, null);
             });
         }
 
@@ -163,7 +172,6 @@
                 path: '/',
                 expires: 365
             });
-            //console.log( 'Set cookie: ' + type + ' to ' + value);
         }
 
     }
