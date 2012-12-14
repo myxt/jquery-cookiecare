@@ -4,6 +4,7 @@
     background-color: #454545;
     color: #FFF;
     opacity: 0.9;
+    z-index: 9999;
 }
 
 #cc a {

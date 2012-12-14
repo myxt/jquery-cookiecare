@@ -28,14 +28,16 @@
         var defaults = {
                 position: 'bottom',
                 mode: 'implicit', // Implicit or explicit. Implicit means cookies are placed without explicit consent. Explicit requires the use to accept cookies.
-                threshold: 3, // The amount of page refreshes the message is shown before an implicit accept is triggered.
+                threshold: 5, // The amount of page refreshes the message is shown before an implicit accept is triggered.
                 message: 'This website is using cookies to improve our customer experience. <a href="/privacy">More information</a>.', // The message to show in the toolbar, usually with a link to the privacy and/or cookie policy.
                 hideMessageButtonText: 'Hide message', // Close button text.
                 enableOptOut: true, // Show a link to disable cookies?
-                denyCookiesButtonText: 'Disable cookies' // Disable cookies link text.
+                settingsLink: '/cookies',
+                settingsButtonText: 'Settings' // Disable cookies link text.
             },
             options = jQuery.extend(defaults, options),
             cookies = {
+                strict: {},
                 analytical: {},
                 social: {}
             },
@@ -93,17 +95,28 @@
             jQuery('body').append('<div id="cc" class="cc-fixed-' + position + '" style="display: none;"><div class="container"><div class="row"><div id="cc-message" class="span7">' + options.message + '</div><div class="span5"><div id="cc-buttons" class="pull-right"></div></div></div></div></div>');
             jQuery('#cc-buttons').append('<a id="cc-button-accept" class="btn btn-small btn-success" href="#" title="' + options.hideMessageButtonText + '">' + options.hideMessageButtonText + '</a>');
             if(options.enableOptOut)
-                jQuery('#cc-buttons').append(' <a id="cc-button-deny" class="btn btn-small btn-link" href="#" title="' + options.denyCookiesButtonText + '">' + options.denyCookiesButtonText + '</a>');
+                jQuery('#cc-buttons').append(' <a id="cc-button-deny" class="btn btn-small btn-link" href="' + options.settingsLink + '" title="' + options.settingsButtonText + '">' + options.settingsButtonText + '</a>');
 
             jQuery('#cc-button-accept').on( 'click', function (e) {
                 approveAllTypes();
                 hideToolbar();
             });
-            jQuery('#cc-button-deny').on( 'click', function (e) {
-                denyAllTypes();
+            jQuery('#cc-button-save-inline').on( 'click', function (e) {
+                e.preventDefault();
+                storeSettings();
                 hideToolbar();
             });
 
+        }
+
+        function storeSettings () {
+            var approvedTypes = jQuery('#cc-settings-form input[name="types"]:checked').val().split(',');
+            jQuery.each(cookies, function (type) {
+                if( jQuery.inArray( type, approvedTypes ) !== -1 )
+                    approveCookieType(type);
+                else
+                    denyCookieType(type);
+            });
         }
 
         function showToolbar () {
@@ -127,15 +140,17 @@
             return count;
         }
 
-        function approveAllTypes () {
-            jQuery.each(cookies, function (type) {
-                setCookie(type, COOKIE_APPROVED_VALUE);
-            });
+        function approveCookieType (type) {
+            setCookie(type, COOKIE_APPROVED_VALUE);
         }
 
-        function denyAllTypes () {
+        function denyCookieType (type) {
+            setCookie(type, COOKIE_DENIED_VALUE);
+        }
+
+        function approveAllTypes () {
             jQuery.each(cookies, function (type) {
-                setCookie(type, COOKIE_DENIED_VALUE);
+                approveCookieType(type);
             });
         }
 
@@ -148,6 +163,7 @@
                 path: '/',
                 expires: 365
             });
+            //console.log( 'Set cookie: ' + type + ' to ' + value);
         }
 
     }
